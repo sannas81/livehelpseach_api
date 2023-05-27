@@ -14,14 +14,32 @@ def get_zendesk_data(string):
     host = "wdomni.zendesk.com"
     api = "/api/v2/help_center/articles/search"
     query_string=string.replace(" ","+")
-    params = {"query": query_string}
+    params = {"query": query_string, "category":"360002456313,360002447234,360002447314,4409809996569,360002455753,360002447254,360002447334,360002447214,360002455733,360002487994,360002455933,900000410866,9186364645529, 360003218594"}
     url = "https://"+host+api
     article_text = " "
     
     response = requests.get(url, params=params)
     
     if response.status_code == 200:
-        article_body = response.json()["results"][0]["body"]
+        index=0
+        response_list = response.json()["results"]
+        
+        for x in  response_list:
+            if x["title"].find("FAQ") > 0:
+                index=index+1
+                continue
+            if x["title"].find("faq") > 0:
+                index=index+1
+                continue
+            if x["title"].find("2022") > 0:
+                index=index+1
+                continue
+            if x["title"].find("2023") > 0:
+                index=index+1
+                continue
+            break 
+        
+        article_body = response_list[index]["body"]
 #        print(article_body)
         article_text = convert_html_text(article_body)
         countOfWords = len(article_text.split())
@@ -42,7 +60,10 @@ def input_modifier(string):
     chat_prompt=string
     zendesk_results = get_zendesk_data(chat_prompt)
 
-    return prefix_text + chat_prompt + " " + zendesk_results
+    full_text=prefix_text + chat_prompt + " " + zendesk_results
+    print(full_text)
+    
+    return full_text
 
 #my_query = "Which reports I can download from operating accounts screen?"
 #result=input_modifier(my_query)
