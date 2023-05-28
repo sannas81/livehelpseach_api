@@ -47,8 +47,8 @@ def get_zendesk_data(string):
             article_text = ' '.join(article_text.split()[:1425])
 #        return article_text
     else:
-        article_text = "Error searching articles"
-#    print(article_text)
+        article_text = "Error searching articles. Resonse code:" + response.status_code
+        print(article_text)
     return article_text
 
 def input_modifier(string):
