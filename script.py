@@ -65,6 +65,14 @@ def input_modifier(string):
     
     return full_text
 
+#this will delete the history which is important for this extension
+def history_modifier(history):
+#    print("history:")
+#    print(history)
+    history['visible'] = []
+    history['internal'] = []
+    
+    return history
 #my_query = "Which reports I can download from operating accounts screen?"
 #result=input_modifier(my_query)
 #print(result)
