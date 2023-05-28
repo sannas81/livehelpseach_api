@@ -60,7 +60,7 @@ def input_modifier(string):
     chat_prompt=string
     zendesk_results = get_zendesk_data(chat_prompt)
 
-    full_text=prefix_text + chat_prompt + " " + zendesk_results
+    full_text=prefix_text + chat_prompt + " : \n\n " + zendesk_results
     #print(full_text)
     
     return full_text
